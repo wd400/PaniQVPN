@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html style="background-image: linear-gradient(180deg, rgb(32, 32, 32), #260233);color: #fff;min-height:100%;font-family: Consolas,monaco,monospace;">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="How to use">
+    <title>How to use</title>
+ </head>
+ <body>
+     <h1>How to use?</h1>
+     Before buying a license please verify that you can successfully set the required setup.<br>
+     <br>
+      <ul>
+        <li>Install the openvpn client supporting post-quantum cryptographic primitives:<br>
+          <a href="/pq-openvpn-linux-staged.tar.gz">Linux</a> <code>8a034a014b30e8b99044d8e75c19f8ae63b982682721628d2dfe68cffa4c1b6924db761341f17dabbeb6c475b0c659f89e8b8535384d3115bea0cb3a476aeafd</code> (SHA3-512)<br>
+          (extract with <code>sudo  tar -xvzf pq-openvpn-linux-staged.tar.gz -C /</code>)<br>
+          <a href="/openvpn-install-2.4.9-I601-Win10.exe">Windows</a> <code>4b1ff7e7c47d3a8b0c2dffaa80716b22fa7d6025b19054ac224a91edaded854f769c0299082e53df3309fbb73e5097a116b3e0b1f8e197be98a43f5bccd89f35</code> (SHA3-512)<br>
+          You can get them directly from the <a href="https://github.com/Microsoft/PQCrypto-VPN/releases">github releases</a> or (the best option) compile the binary from the sources also provided on the link.
+        </li><br>
+        <li>Get the configuration file for openvpn, save it on your computer<br>
+          <a href="/linconf.config" download>Linux</a>
+          <a href="/winconf.config" download>Windows</a>
+        </li><br>
+        <li>Install Tor on your computer (if you're here, chances are you already have).<br>
+           Launch the tor browser (or just tor on linux by launching the <code>tor</code> command) which you can then put in the background.
+          </li><br>
+          <li>
+            Start openvpn with the configuration file <br>
+<code>openvpn --config yourconfigfile.config</code><br>
+Enter your previously obtained credentials (if you don't have them yet you can get them <a href="/access">here</a> ) <br>
+Done! You can check that the connection is made with post-quantum algorithms in the openvpn logs (during the key exchange)
+You can also check that you are using tor by going to this site <a href="https://check.torproject.org">https://check.torproject.org</a> (clearnet)
+and that you can access hidden services <a href="https://3g2upl4pq6kufc4m.onion/">https://3g2upl4pq6kufc4m.onion/ (DuckDuckGo)</a> .
+          </li>
+      </ul>  
+
+      <br>tested on ubuntu 18.04<br>
+      <a href="/">Main page</a>
+ </body>
+ </html>

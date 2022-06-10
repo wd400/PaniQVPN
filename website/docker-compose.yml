@@ -1,0 +1,172 @@
+version: '3.3'
+
+services:
+
+  torweb:
+    build: ./torweb
+    restart: always
+    hostname: torweb
+    networks:
+      - tor_api_nw
+      - tor_nginx_nw
+      - internet2
+    environment:
+        WEB_TOR_SERVICE_HOSTS: 80:nginx:80
+        WEB_TOR_SERVICE_VERSION: '3'
+        VPN_TOR_SERVICE_HOSTS: 3333:api:8000
+        VPN_TOR_SERVICE_VERSION: '3'
+        TOR_ENABLE_VANGUARDS: 'true'
+        VANGUARDS_EXTRA_OPTIONS: |
+          [Global]
+          enable_cbtverify = True
+          loglevel = WARN
+          circ_max_megabytes = 1
+        TOR_EXTRA_OPTIONS: |
+          Sandbox 1
+    #      NoExec 1
+    #      RunAsDaemon 1
+         # FascistFirewallPorts
+
+  #        FascistFirewall 1
+    depends_on:
+      - nginx
+      - api
+
+    # Keep keys in volumes
+    volumes:
+      - ./torweb/tor-keys:/var/lib/tor/hidden_service/vpn/authorized_clients/
+
+    # Set secret for key, use the same name as the service
+    secrets:
+      - source: web
+        target: web
+      - source: vpn
+        target: vpn
+
+
+  nginx:
+    build: ./nginx
+    restart: always
+    hostname: nginx
+    environment:
+       WEB_DOMAIN: "${MONERO_HOST}"
+       MONERO_ADDRESS: "${MONERO_ADDRESS}"
+    networks:
+      - tor_nginx_nw
+      - nginx_api_nw
+    depends_on: 
+      - api
+    ports:
+      - "8081:80"
+ #     - "443:443"
+    volumes:
+      - captcha:/www/captcha:ro
+
+  api:
+    build: ./web_api
+    restart: always
+    hostname: api
+    networks:
+      - nginx_api_nw
+      - db_nw
+      - tor_api_nw
+      - internet1
+   # initial_delay: 10s
+    environment:
+      MONERO_ADDRESS: "${MONERO_ADDRESS}"
+      MONERO_HOST: "${MONERO_HOST}"
+      
+      DB_NAME: vpnDB
+      DB_PASS: "${DB_PASS}"
+
+      INSERT_MESSAGE: insert_message
+      INSERT_MESSAGE_PASS: Y983m?M#{Lf#Q+BQ#tY"H"<#Zr-+q4
+
+      INSERT_VPNNODE: insert_vpnnode
+      INSERT_VPNNODE_PASS: L]u5ZVfwx]Jn}j5F".pGx4\az5TW!#
+
+      SELECT_VPNNODE: select_vpnnode
+      SELECT_VPNNODE_PASS: A$$xhnd'NP#E&.W,8YS`c_7/%>bc.zR
+
+      UPDATE_VPNNODE: update_vpnnode
+      UPDATE_VPNNODE_PASS: L]u5ZVfpp]Jn}j5F".pGx4\az5TW!#
+
+      VPNNODE_USER: vpnnode_user
+      VPNNODE_PASS: 27R^>KnNJ,m~794Mnt#x
+
+      INSERT_USER: insert_user
+      INSERT_USER_PASS: dhuWAhwE-z4RFL=.9(?H2.q!(]ZGhK
+
+      SELECT_USER: select_user
+      SELECT_USER_PASS: Rrc&PF[B[mV)64UK[~:j<ye2kyU)LT
+
+      CLEAN_VPN: clean_vpn
+      CLEAN_VPN_PASS: 5a6v8F!\jk]AT<#E2ukV8Jj2:MPv_.
+
+      TRANSACTION: transaction_user
+      TRANSACTION_PASS: MNTS7!dvH%*R7yv/,5GB~:AG[>KuLF
+
+      ACTIVATION: activation_user
+      ACTIVATION_PASS: XNTs7!dvH%*R0yW/,5GB~:AG[>KpLP
+
+    volumes:
+      - captcha:/app/captcha
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - db
+  #  volumes:
+      
+ #     - ./web_api/torfiles:/etc/tor/
+
+      
+#  torproxy:
+#    build: ./torproxy
+#    restart: always
+#    hostname: torproxy
+#    expose:
+#      - "9050"
+#    environment:
+#      NewCircuitPeriod: 400
+#    networks:
+#      - api_nw
+#      - internet1
+
+
+  db:  
+    build: ./db
+    networks:
+      - db_nw
+    hostname: db
+    volumes:
+      - ./db/postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: vpnDB
+      PGDATA: /var/lib/postgresql/data/
+    ports:
+      - 5555:5432 # expose ports - HOST:CONTAINER
+
+
+networks:
+  nginx_api_nw:
+  tor_api_nw:
+  tor_nginx_nw:
+  db_nw:
+  internet1:
+  internet2:
+
+volumes:
+  tor-keys:
+    driver: local   
+  onion_auth:
+      driver: local
+  captcha: {}
+
+secrets:
+  web:
+    file: ./torwebservice.key
+  vpn:
+    file: ./torvpnservice.key
+  

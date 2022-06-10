@@ -1,0 +1,26 @@
+<!doctype html>
+<html style="background-image: linear-gradient(180deg, #000, #260233);color: #fff;min-height:100%;font-family: Consolas,monaco,monospace;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Activate your license">
+  <title>Activate your license</title>
+</head>
+<body>
+  <h1>Activate your license</h1>
+
+  {% if msgerr is defined %} 
+    <h3>{{msgerr}}</h3><br>
+  {% endif %}
+  <form action="/activation" method="POST">
+<input type="text" maxlength="32" name="key" placeholder="Activation key" size=35 autocomplete="off"><br>
+<img src="{{captchaimg}}"><br>
+<input type="text" maxlength="10" name="captcha" placeholder="Captcha" size=20 autocomplete="off"><br>
+<input type="hidden" name="captchakey" value="{{captchakey}}">
+      <input type="submit" value="Get your credentials" />
+  </form><br><br><br>
+
+  <a href="/">Main page</a>
+
+</body>
+</html>

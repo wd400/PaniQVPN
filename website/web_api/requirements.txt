@@ -1,0 +1,13 @@
+#falcon
+uvicorn
+#gunicorn
+blacksheep
+uvloop
+requests
+requests[socks]
+psycopg2
+stem
+httptools
+requests_tor
+PyCryptodome
+Pillow

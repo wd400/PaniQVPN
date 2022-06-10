@@ -1,0 +1,41 @@
+<!doctype html>
+<html style="background-image: linear-gradient(180deg, #000, #260233);color: #fff;min-height:100%;font-family: Consolas,monaco,monospace;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Access page">
+  <title>Get access</title>
+</head>
+<body>
+  <h1>Get access to paniqvpn</h1>
+
+  {% if msgerr is defined %} 
+    <h3>{{msgerr}}</h3><br>
+  {% endif %}
+
+  Cheaper than any other vpn provider for the launching!
+  <form action="/getaccess" method="POST">
+      Access duration
+      <select name="duration" id="duration">
+          <option value="1">1 hour | free trial</option>
+          <option value="2">1 day | 0.001 xmr</option>
+          <option value="3">1 week | 0.006 xmr</option>
+          <option value="4">1 mouth (31 days) | 0.024 xmr</option>
+          <option value="5">6 mouths | 0.14 xmr</option>
+          <option value="6">1 year | 0.27 xmr</option>
+        </select> <br><br>
+
+        Before submitting please send the amount you have selected to this address and wait about 15min (time for a transaction to be added to the blockchain).
+      <code style="word-wrap:break-word;">49ry5JnHDEPfSwamTmYubHaaeKiD5WhDHWB8xENxjUksGXBozzN57zZVXPcpnX36hYUXZFg3YQrtrMaLB4hwaR4PBGzPan1</code><br>
+      <input type="text" maxlength="64" name="trID" placeholder="Transaction ID" size=65 autocomplete="off"><br>
+<input type="text" maxlength="64" name="trKey" placeholder="Transaction key" size=65 autocomplete="off"><br><br>
+<img src="{{captchaimg}}"><br>
+<input type="text" maxlength="10" name="captcha" placeholder="Captcha" size=20 autocomplete="off"><br>
+<input type="hidden" name="captchakey" value="{{captchakey}}">
+      <input type="submit" value="Get codes" />
+  </form><br><br>Login/password can be used once at a time<br><br>
+
+  <a href="/">Main page</a>
+
+</body>
+</html>

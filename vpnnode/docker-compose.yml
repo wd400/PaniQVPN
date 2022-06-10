@@ -1,0 +1,118 @@
+version: '3.8'
+
+networks:
+  vpnnw:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 174.18.18.0/24
+  apinw:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 173.18.18.0/24
+  syncnw:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 175.18.18.0/24
+
+services:
+
+  # watchtower:
+  #   restart: always
+  #   image: containrrr/watchtower
+  #   container_name: watchtower
+  #   volumes:
+  #       - /var/run/docker.sock:/var/run/docker.sock
+
+
+  torweb:
+    build: ./torweb
+    restart: always
+    hostname: torweb
+    networks:
+      vpnnw:
+        ipv4_address: 174.18.18.10
+      apinw:
+        ipv4_address: 173.18.18.10
+    environment:
+        TOR_ENABLE_VANGUARDS: 'true'
+        TOR_CONTROL_PORT: 173.18.18.10
+        TOR_CONTROL_PASSWORD: 'QbqLsuvnXMEQJzqu8FzVkYx5'
+        VANGUARDS_EXTRA_OPTIONS: |
+          [Global]
+          enable_cbtverify = True
+          loglevel = NOTICE
+          circ_max_megabytes = 1
+# ERROR, WARN, NOTICE, INFO, DEBUG.
+        TOR_EXTRA_OPTIONS: |
+          Sandbox 1
+          NoExec 1
+  #        CookieAuthentication 1
+    #      RunAsDaemon 1
+         # FascistFirewallPorts
+#    volumes:
+#      - onion_files:/var/lib/tor/
+
+  #        FascistFirewall 1
+#    depends_on:
+#      - vpn
+ #   ports:
+ #     - 9051:9051
+    
+
+  vpn:
+      build: ./openvpn
+ #     restart: always
+      hostname: openvpn
+      networks: 
+        vpnnw:
+          ipv4_address: 174.18.18.12
+        syncnw:
+          ipv4_address: 175.18.18.12
+      cap_add:
+        - NET_ADMIN
+      security_opt:
+        - apparmor:docker-default 
+      sysctls:
+        net.ipv6.conf.all.forwarding: 0
+        net.ipv6.conf.all.disable_ipv6: 1
+        net.ipv6.conf.default.disable_ipv6: 1
+        net.ipv4.ip_forward:  1
+      ports:
+        - 8080:8080 # expose ports - HOST:CONTAINER
+        - 1194:1194/tcp # expose ports - HOST:CONTAINER
+ #       - 1194:1194/tcp # expose ports - HOST:CONTAINER
+      depends_on: 
+        - torweb
+
+  api:
+      build: ./api
+      restart: always
+      hostname: api
+      environment:
+        TOR_CONTROL_PASSWORD: 'QbqLsuvnXMEQJzqu8FzVkYx5'
+        WEBURL: 'auttahjeahn2rqoss47wfh6wczmquqqca2cr4rxufrhmtrgphy2oz3yd.onion:3333'
+      networks:
+        apinw:
+          ipv4_address: 173.18.18.11
+        syncnw:
+          ipv4_address: 175.18.18.11
+      depends_on:
+        - vpn
+        - torweb
+    
+volumes:
+  onion_files:
+    driver: local   
+#disk

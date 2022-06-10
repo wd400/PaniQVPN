@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html style="background-image: linear-gradient(180deg, rgb(32, 32, 32), #260233);color: #fff;min-height:100%;font-family: Consolas,monaco,monospace;">
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Access page">
+    <title>PaniQVPN</title>
+ </head>
+   <h1>PaniQVPN</h1>
+   <h2>  Post quantum cryptography based vpn over Tor for truly paranoids.</h2><br>
+
+    <dl>
+   <dt><h3>Why a quantum vpn?</h3></dt>
+   <dd>
+    Even if today no public quantum computer is publicly able to break the usual vpn encryption 
+    (RSA and Diffie-Hellman), many actors are already storing communications with the 
+    aim of decrypting them once the quantum advent is over. The scientific community 
+    estimates such an advent in 10 to 15 years. Many post-quantum cryptographic algorithms 
+    have already been developed and considered at least as reliable as current algorithms.
+    </dd>
+
+    <dt><h3>Why this one?</h3><dt>
+        <dd><b>Strongest security standards available by default</b><br>
+            We currently use the most advanced and secure post quantum algorithms available to address the paranoid ones of you.<br>
+            Today we are using p521_falcon1024 and p521_kyber90s1024 to establish the secure vpn connection, hybrid algorithms classified L5 according to the NIST.<br>
+            They will be upgraded at any time in the event of a security breach.<br>
+        </dd>
+        <dd><b>We only store the strictly minimum amount of data possible</b><br>
+        -no personal information<br>
+        -nolog:no ip/timestamps/data transfers<br>
+        -no DPI (deep packet inspection) of any kind<br>
+        of course we don't have any partnerships of any kind with others companies/agencies/...<br><br>
+        For users we store: username, unique hash salted password, expiration timestamp.<br>
+        This relation will be permanently deleted as soon as the user has expired.<br> 
+        False data is added regularly.<br><br>
+        For payments we only store a salted hash of Monero transactions, without any link to any account.<br>
+        False data is added regularly.
+    </dd>
+        <dd><b>Tor integrated</b><br>
+        We will never know your real ip address and we also hide our servers real ip address to prevent state spying or censorship on our servers.
+        Tor can also hide the fact that you are utilizing PaniQVPN.<br>
+        See this <a href="#a-scheme">schema</a> for more details</dd> 
+    <dd><b>We only accept Monero</b><br>
+        Most secure payment at this time, because privacy is not an option</dd>
+    <dd><b>Open source based</b><br>
+        We are aware that roll our own self made crypto is a major security issue, so we are using open sources and trusted implementations of algorithms that can be found <a href="https://github.com/Microsoft/PQCrypto-VPN">here</a> (github clearnet)</dd>
+    <dd><b>Secure by conception</b><br>
+        principle of least authority, defensive programming, isolation, at mind for the whole development<br>
+        fully open source based stack<br>
+        each disk is strongly encrypted<br>
+        check out our <a href="#a-bugbounty">bug bouty program</a> !
+    </dd>
+</dd>
+<br>
+<br>
+<center> <h1><a href="/getaccess">Get access</a></h1></center>
+
+<br>
+    <dt><h3>How to use</h3></dt>
+  <dd> <a href="/howto.html">Check this page!</a></dd> 
+    <dt><h3>Next goals</h3></dt>
+    <dd>increase number of servers / increase bandwidth<br>
+        increase internal security over and over<br>
+        search for ways to increase privacy and anonymity of users (junk traffic/delay noise?)<br>
+        Suggestions are welcome!<br>
+    </dd>
+
+    <dt><h3>General tips for your privacy</h3></dt>
+    <dd> Before doing anything we strongly recommend you to deeply interest yourself at least about privacy, opsec, and surveillance. 
+        We provide a really powerful tool but you should always be aware of whatyou are doing.<br>
+        <h4>Useful ressources:</h4>
+        <a href="http://www.dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion/wiki/Documentation">http://www.dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion/wiki/Documentation</a><br>
+        <a href="https://book.cyberyozh.com/">https://book.cyberyozh.com/</a>" (clearnet)<br>
+        Always encrypt your communications (https over http, ssh, ...)<br>
+        Never give any kind of information that can by any means identify you, never<br>
+
+
+    
+    </dd>
+
+    <dt><a id="a-bugbounty"></a><h3>Bug bounty program</h3></dt>
+    <dd>To improve the security of PaniQVPN we encourage research and disclosure of security flaws by launching our bug bounty program.
+<br>
+        To propose a bug submit a poc and if possible (for more transparency) the cvss vector of your vulnerability calculated <a href="https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator">here</a> 
+         (clearnet). Don't forget to add a way to reach you in return (prefer pgp) to send you your reward.
+        Rewards are licenses whose duration follows the following rule:<br>
+        <table>
+            <tr>
+              <th>cvss</th>
+              <td>[1, 2]</td>
+              <td>]2, 4]</td>
+              <td>]4, 6]</td>
+              <td>]6, 8]</td>
+              <td>]8, 10]</td>
+            </tr>
+            <tr>
+                <th>duration</th>
+                <td>1 day</td>
+                <td>1 week</td>
+                <td>1 month</td>            
+                <td>6 months</td>
+                <td>1 year</td>
+             </tr>
+        </table>
+
+        
+
+        To activate your earned license go <a href="/activation">here</a>.
+        If you wish you will be added to the dedicated leaderboard.<br>
+        p.s.: We plan to improve captcha so please don't report weak captcha as a security flaw<br>
+        p.s.2: No vulnerabilities found yet
+    </dd>
+    <dt><h3>Q&A</h3></dt>
+    <dd>
+    <b>Why not fully open source?</b><br>
+    The client is in fact already open source.<br>
+    if the project goes well we also plan to share the full code of servers but for now, we estimate that this is to risky for users and us to do so.<br><br>
+    
+    <b>Why a free trial?</b><br>
+
+    The aim of the trial offer is to convince the sceptics (and rightly so) of the good functioning of the vpn and the technologies at work (use of post-quantum cryptography, operation on Tor, multi-server architecture, etc... ).<br>
+This option also allows you to make sure that the operating environment is properly set up before buying a paid license.<br><br>
+
+<b>Why don't provide DNS and NTP servers?</b><br>
+    Simply because we don't want to control the full chain of information.<br>
+    But if this is a request from users and trust for the PaniQVPN project is strong it could be realized.<br>
+<br>
+       <b>Ask your bellow!</b> </dd>
+    </dl>
+    <br>
+    <h3>General scheme:</h3>
+    <a id="a-scheme">
+    <img src="scheme.png" style="margin: auto;display: block;max-width:100%">
+    </a>
+    <br><br><br>  
+    <h3>Contact</h3>
+    For bug report, suggestions, questions, ...
+    <form action="/contact" method="POST">
+        <textarea type="text" maxlength="500" name="message" placeholder="Message" rows="4" cols="50" autocomplete="off" ></textarea><br>
+        PGP fingerprint: <code style="word-wrap:break-word;">53E1 A348 F1AF 586B 4C5F  B143 E56B AAD3 A13F 962F</code><br>
+        public key: <a href="/public.pgp" download="public.pgp">Linux</a><br>
+<br>
+        <input type="submit" value="Submit" />
+    </form>
+    <br>
+  <center>Since 2021</center>
+</html>
